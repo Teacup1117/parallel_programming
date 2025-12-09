@@ -1,0 +1,64 @@
+# Compiled executables
+hw1/hw1
+hw1/hw1_*
+!hw1/hw1.cpp
+!hw1/hw1_*.cpp
+hw2/hw2
+hw2/validate
+hw2/validate_new
+hw3/hw3
+hw4/hw4
+hw5/hw5
+
+# Object files
+*.o
+*.a
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Debug symbols
+*.dSYM/
+
+# Temporary files
+*.tmp
+*.log
+*.err
+*.out
+temp_*
+tmp.*
+
+# Archive files
+*.tar
+*.tar.gz
+*.zip
+
+# Results and outputs
+hw2/results/
+hw3/results/
+
+# Large test data (keep structure, ignore large files)
+hw2/testcases/*.jpg
+hw2/goldens/*.jpg
+hw2/goldens/*.txt
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Documentation builds
+*.docx
+*.pdf
+
+# SSH/login scripts
+*@*.tw
+
+# vllm directory (likely external dependency)
+vllm/

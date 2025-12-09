@@ -1,0 +1,143 @@
+Assignment 5
+N-body Simulation
+Parallel Programming
+HW5 Specification
+
+AMD Tutorial
+AMD HPC User Guide
+
+SSH
+Username list: [Link]ssh <username>@172.16.162.206
+Required CSIE VPN: [Link]
+Default Password: csie_pp25
+Change Your Password after first login
+
+
+
+HIP Code
+Add #include "hip/hip_runtime.h" to your .cpp file
+Replace all cudaXXXX with hipXXXX
+cudaMalloc -> hipMalloc
+cudaMemcpy -> hipMemcpy
+cudaMemcpyHostToDevice -> hipMemcpyHostToDevice
+Compile: hipcc hw5.cpp -o hw5
+
+Problem Introduction
+
+N-body Simulation
+
+N-body Simulation: Idea
+N-body is used to predict the motion of celestial bodies. We break continuous time into discrete time steps. The time difference of each time step is given by Δt.
+At each time step:
+Calculate the accelerations applied to each body.
+Update the velocities using the accelerations of each body.
+Update the positions using the velocities of each body.
+
+Initial State: Positions & Velocities
+
+Compute Forces
+
+Compute Forces
+
+Update Velocities
+
+Update Positions
+
+Update Positions
+
+Crisis
+In the future, human beings have developed a technology to create artificial gravity. Space travel is as normal as driving a car. One day, Planetary Defense Agency discovered that terrorists intend to use this technology and disguise gravity-generation devices into seemly harmless civilian spacecrafts. They want to use these gravity devices to induce multiple asteroids to hit the colonized planet with high population. If their plan works out, the planet will face massive destruction.
+Your mission is to determine whether the terrorist’s plan will work and how to prevent it from attack.
+
+Crisis
+We will assume that the collision happens if the distance between the asteroid and the planet is less than 107 m.
+
+Gravity Devices
+Gravity devices (type=device) have a special property: their masses will fluctuate. Refer to the spec for the detailed formula.
+
+Counter-Attack
+Planetary Defense Agency has to act quickly because the asteroids are so fast that it’s infeasible to deflect their direction once the asteroids get near to the planet. The best solution they can do is to destroy such gravity devices with space missiles in order to eliminate the gravitational pull.
+The missile carries some explosives and fuels just enough to reach the targeted gravity device. Launching the missile has a cost positively correlated to the time that the missile will travel.
+
+
+
+Counter-Attack
+For the ease of simulation, we will assume:
+The missile is sent from the planet
+The missile can guide itself to hit the gravity device with minimal distance, i.e., it travels in a constant velocity relative to the planet.
+The missile has zero mass and is unaffected by gravity
+A gravity device's mass becomes zero after it is destroyed
+The missile reaches the device when the travel distance is greater than the distance between the planet and the targeted device
+
+The Problem
+Run the simulation for a given amount of time steps (defined by the spec) and output the answers to the following questions:
+If there were no gravity devices, what is the minimal distance between the planet and the asteroid?
+At what time step will the asteroid hit the planet?
+Can the collision be prevented if a missile is launched to destroy one of the gravity devices? If so, determine the gravity device to destroy which saves the planet and with the lowest cost.
+
+Input
+N planet-id asteroid-idqx0 qy0 qz0 vx0 vy0 vz0 m0 type0qx1 qy1 qz1 vx1 vy1 vz1 m1 type1qx2 qy2 qz2 vx2 vy2 vz2 m2 type2...
+
+Input: Number of Celestial Bodies
+N planet-id asteroid-idqx0 qy0 qz0 vx0 vy0 vz0 m0 type0qx1 qy1 qz1 vx1 vy1 vz1 m1 type1qx2 qy2 qz2 vx2 vy2 vz2 m2 type2...
+
+Input: The ID of the Planet Under Concern
+N planet-id asteroid-idqx0 qy0 qz0 vx0 vy0 vz0 m0 type0qx1 qy1 qz1 vx1 vy1 vz1 m1 type1qx2 qy2 qz2 vx2 vy2 vz2 m2 type2...
+
+Input: The ID of the Asteroid Under Concern
+N planet-id asteroid-idqx0 qy0 qz0 vx0 vy0 vz0 m0 type0qx1 qy1 qz1 vx1 vy1 vz1 m1 type1qx2 qy2 qz2 vx2 vy2 vz2 m2 type2...
+
+Input: Positions of Bodies at step=0
+N planet-id asteroid-idqx0 qy0 qz0 vx0 vy0 vz0 m0 type0qx1 qy1 qz1 vx1 vy1 vz1 m1 type1qx2 qy2 qz2 vx2 vy2 vz2 m2 type2...
+
+Input: Velocities of Bodies at step=0 
+N planet-id asteroid-idqx0 qy0 qz0 vx0 vy0 vz0 m0 type0qx1 qy1 qz1 vx1 vy1 vz1 m1 type1qx2 qy2 qz2 vx2 vy2 vz2 m2 type2...
+
+Input: Mass of Bodies at step=0 (fluctuates if type=device)
+N planet-id asteroid-idqx0 qy0 qz0 vx0 vy0 vz0 m0 type0qx1 qy1 qz1 vx1 vy1 vz1 m1 type1qx2 qy2 qz2 vx2 vy2 vz2 m2 type2...
+
+Input: Type of Body
+N planet-id asteroid-idqx0 qy0 qz0 vx0 vy0 vz0 m0 type0qx1 qy1 qz1 vx1 vy1 vz1 m1 type1qx2 qy2 qz2 vx2 vy2 vz2 m2 type2...
+
+Reminder
+The missile is launched right from the start, meaning that at step = 1, the missile has already traveled a distance o f  (1 * Δt * missile_speed).
+The distance between the planet and the missile is calculated using the planet's position at the moment of launch. In other words, it can be directly calculated as (step * Δt * missile_speed).
+The distance between the planet and the device needs to be calculated based on their latest positions at the current step. Assuming this distance is (dist_planet_device) , a hit is considered if (step * Δt * missile_speed) > (dist_planet_device).
+
+
+Reminder
+missle 是一開始就發射，也就是在 step=1 時 missile 已經走了 1 * Δt * missile_speed 這麼遠的距離
+planet 跟 missile 的距離是用發射時當下的星球位置來算，也就是直接算 step * Δt * missile_speed 即可
+星球跟裝置的距離則是要看當前兩者最新的位置來做計算，假設這個距離是 dist_planet_device，則 step * Δt * missile_speed > dist_planet_device 就算 hit。
+
+
+Grading
+Correctness (50%)
+Please make sure to use GPU and verify your answer.
+Performance (20%) 
+Based on the total time you solve all the test cases.
+Report (30%) 
+Please describe, in detail, how you parallelize your codes and answer the questions in the spec.
+
+Grading - Report
+Implementation:
+What is your parallelism strategy?
+Optimization techniques?
+How do you manage the 2-GPU resources?
+If there are 4 GPUs instead of 2, what would you do to maximize the performance?
+If there are 5 gravity devices, is it necessary to simulate 5 n-body simulations independently for this problem?
+(Optional) Any suggestions or feedback for the homework are welcome.
+
+Submission
+Please zip the following files to a single archived file named <StudentID>.tar and submit to NTU cool:
+hw5.cpp
+report.pdf
+Makefile (optional)
+Please follow the naming listed above carefully. Failing to adhere to the names above will result to points deduction.
+
+Deadline
+The deadline of assignment 5 is 2025/11/28  23:59
+Everyone is welcomed to ask questions on ntu cool.
+
+https://learn.nvidia.com/dli-event
+event code: NTU_CUDAP_AMBASSADOR_NO25
