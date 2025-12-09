@@ -2,7 +2,6 @@
 hw1/hw1
 hw1/hw1_*
 !hw1/hw1.cpp
-!hw1/hw1_*.cpp
 hw2/hw2
 hw2/validate
 hw2/validate_new
@@ -28,6 +27,8 @@ __pycache__/
 *.out
 temp_*
 tmp.*
+*.txt
+!Makefile
 
 # Archive files
 *.tar
@@ -38,10 +39,55 @@ tmp.*
 hw2/results/
 hw3/results/
 
-# Large test data (keep structure, ignore large files)
-hw2/testcases/*.jpg
-hw2/goldens/*.jpg
-hw2/goldens/*.txt
+# Test cases and samples
+hw1/samples/
+hw1/r14922172/
+hw1/detailed_test.sh
+hw1/test.sh
+hw1/test_simple.txt
+hw1/answer.txt
+hw1/example_solver.py
+hw1/play.py
+hw1/validate.py
+hw1/*.md
+hw1/.github/
+
+hw2/testcases/
+hw2/goldens/
+hw2/scripts/
+hw2/r14922172/
+hw2/test_*.sh
+hw2/validate.cpp
+hw2/validate.py
+hw2/visualize_load_balance.py
+hw2/load_balance_*
+hw2/*.md
+hw2/*.png
+hw2/*.csv
+
+hw3/testcases/
+hw3/r14922172/
+hw3/test_*.sh
+hw3/*.md
+hw3/glm/
+hw3/lodepng/
+
+hw4/testcases/
+hw4/sample/r14922172/
+hw4/sample/*.sh
+hw4/sample/*.md
+hw4/sample/hw4*.cu
+hw4/sample/sha256*.cu
+hw4/sample/sha256*.h
+hw4/sample/Makefile*
+hw4/validation
+
+hw5/testcases/
+hw5/samples/
+hw5/parse.py
+hw5/validate.py
+hw5/output_*.txt
+hw5/*.md
 
 # IDE and editor files
 .vscode/
@@ -62,3 +108,4 @@ hw2/goldens/*.txt
 
 # vllm directory (likely external dependency)
 vllm/
+pp25_final_project/
